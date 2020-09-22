@@ -15,3 +15,7 @@ In the last section, write some `inline` code as well as leave a proper block:
 keque
 peque
 ```
+
+# Extras
+
+Throwing in [some links](https://example.org "some links"), **bolded text**.
