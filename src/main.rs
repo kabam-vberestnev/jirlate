@@ -29,7 +29,7 @@ fn main() -> Result<()> {
             "".to_owned()
         },
         Text(text) => text.into_string(),
-        Code(text) => format!("{{code}}{}{{code}}", text),
+        Code(text) => format!("{{{{{}}}}}", text),
         Start(Tag::CodeBlock(_)) | End(Tag::CodeBlock(_)) => format!("{{code}}\n"),
         End(_) | SoftBreak => format!("\n"),
         _ => "".to_owned(),
