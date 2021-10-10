@@ -8,7 +8,7 @@ Add list of things, such as:
 - kek
 - peq
 
-# Then finally
+## Then finally
 
 In the last section, write some `inline` code as well as leave a proper block:
 ```
