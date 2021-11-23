@@ -19,3 +19,5 @@ peque
 # Extras
 
 Throwing in [some links](https://example.org "some links"), **bolded text**.
+
+Strike-through ~~didn't work~~ works!
