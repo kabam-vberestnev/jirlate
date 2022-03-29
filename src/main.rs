@@ -2,20 +2,16 @@ use pulldown_cmark::{Event::*, Options, Parser, Tag};
 use std::io::*;
 
 fn main() -> Result<()> {
-    let mut args = std::env::args();
-    let source = if let Some(filename) = args.nth(1) {
-        let mut file = std::fs::File::open(std::path::Path::new(&filename))
-            .unwrap_or_else(|_| panic!("Failed to open file at:\n {}", filename));
-        let mut contents = String::new(); file.read_to_string(&mut contents)?;
-        contents
-    } else {
-       String::from("### Hello, this is h3 \n with some _italics_ and `code` \n and \n ``` \n some\n multiline\n code\n```")
-    };
-
+    let mut source = String::new();
+    BufReader::new(stdin())
+        .read_to_string(&mut source)?;
+    
     let mut options = Options::empty();
     options.insert(Options::ENABLE_STRIKETHROUGH);
     options.insert(Options::ENABLE_TASKLISTS);
+
     let parser = Parser::new_ext(&source, options);
+
     let mut skip_once: bool = false;
     let jira = parser.map(|event| match event {
         Start(Tag::Heading(x)) if (1..=6).contains(&x) => format!("h{}. ", x),
@@ -26,7 +22,7 @@ fn main() -> Result<()> {
             skip_once = true;
             format!("[{}|{}]", title, url)
         },
-        End(Tag::Link(_,_,_)) => format!(""),
+        End(Tag::Link(_,_,_)) => String::new(),
         Start(Tag::Item) => "- ".to_string(),
         Text(_) if skip_once => {
             skip_once = false;
